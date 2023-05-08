@@ -3,56 +3,55 @@
 
 typedef struct 
 {
-    int codigo;
-    char nome[50];
-    float preco;
+    int code;
+    char name[50];
+    float price;
+} Product;
 
-} Produto;
+Product productArray[9];
 
-Produto vetorDeProdutos[9];
-
-int funcaoIntermediaria(int opcao, Produto vetorDeProdutos[]);
-int funcaoDeCadastro(Produto vetorDeProdutos[]);
-int funcaoDeBusca(Produto vetorDeProdutos[]);
+int intermediateFunction(int option, Product productArray[]);
+int registrationFunction(Product productArray[]);
+int searchFunction(Product productArray[]);
 
 int code = 0;
 
 int main() 
 {
-    int opcao;
+    int option;
     
     while (1) 
     {
         printf("\n      >>>>> Menu <<<<<\n\n");
         printf("1. Cadastrar novo produto.\n");
         printf("2. Buscar produtos.\n");
-        printf("0. Sair\n");
+        printf("0. Sair.\n");
         printf("\nEscolha uma opcao: ");
-        scanf("%d", &opcao);
+        scanf("%d", &option);
 
-        if (opcao == 0)
+        if (option == 0)
         {
             printf("\nSaindo...\n");
             break;
         }
 
-        funcaoIntermediaria(opcao, vetorDeProdutos);
+        intermediateFunction(option, productArray);
     }
 
     return 0;
 }
 
-int funcaoIntermediaria(int opcao, Produto vetorDeProdutos[])
+int intermediateFunction(int option, Product productArray[])
 {
-    switch (opcao) 
+    switch (option) 
     {
         case 1:
             printf("\n>>> Bem-vindo ao ambiente de cadastro de produtos <<<\n");
-            funcaoDeCadastro(vetorDeProdutos);
+            registrationFunction(productArray);
             break;
         case 2:
             printf("\n>>> Bem-vindo ao ambiente de busca de produtos <<<\n");
-            funcaoDeBusca(vetorDeProdutos);
+            searchFunction(productArray);
             break;
         default:
             printf("\n>>> Opcao invalida. Por favor, escolha novamente <<<\n");
@@ -61,7 +60,7 @@ int funcaoIntermediaria(int opcao, Produto vetorDeProdutos[])
     return 0;
 }
 
-int funcaoDeCadastro(Produto vetorDeProdutos[])
+int registrationFunction(Product productArray[])
 {
     if (code >= 10) 
     {
@@ -70,14 +69,14 @@ int funcaoDeCadastro(Produto vetorDeProdutos[])
         return 0;
     }
 
-    Produto novoProduto;
+    Product newProduct;
 
     printf("\nDigite o codigo do produto: ");
-    scanf("%d", &novoProduto.codigo);
+    scanf("%d", &newProduct.code);
 
     for (int i = 0; i < code; i++) 
     {
-        if (vetorDeProdutos[i].codigo == novoProduto.codigo) 
+        if (productArray[i].code == newProduct.code) 
         {
             printf("\n\n >>>>> Esse codigo ja foi cadastrado no sistema. Tente outro <<<<< \n\n");
 
@@ -86,35 +85,35 @@ int funcaoDeCadastro(Produto vetorDeProdutos[])
     }
 
     printf("\nDigite o nome do produto: ");
-    scanf("%s", novoProduto.nome);
+    scanf("%s", newProduct.name);
 
     printf("\nDigite o preco do produto: ");
-    scanf("%f", &novoProduto.preco);
+    scanf("%f", &newProduct.price);
 
-    vetorDeProdutos[code] = novoProduto;
+    productArray[code] = newProduct;
     code++;
 
-    printf("\n>>> Produto cadastrado com sucesso <<<\n");
+    printf("\n>>> Produto cadastrado com sucesso! <<<\n");
 
     return 0;
 }
 
-int funcaoDeBusca(Produto vetorDeProdutos[])
+int searchFunction(Product productArray[])
 {
-    int codigoBusca;
+    int searchCode;
 
     printf("\nDigite o codigo do produto que deseja buscar: ");
-    scanf("%d", &codigoBusca);
+    scanf("%d", &searchCode);
 
     int i;
     for (i = 0; i < code; i++) 
     {
-        if (vetorDeProdutos[i].codigo == codigoBusca) 
+        if (productArray[i].code == searchCode) 
         {
             printf("\nProduto encontrado:\n\n");
-            printf("Codigo: %d\n", vetorDeProdutos[i].codigo);
-            printf("Nome: %s\n", vetorDeProdutos[i].nome);
-            printf("Preco: %.2f\n", vetorDeProdutos[i].preco);
+            printf("Codigo: %d\n", productArray[i].code);
+            printf("Nome: %s\n", productArray[i].name);
+            printf("Preco: %.2f\n", productArray[i].price);
 
             return 0;
         }
