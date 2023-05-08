@@ -1,4 +1,3 @@
-//Testando atualização de repositório
 #include <stdio.h>
 #include <stdlib.h>
 
