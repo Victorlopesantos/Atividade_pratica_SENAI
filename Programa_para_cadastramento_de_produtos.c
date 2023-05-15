@@ -1,121 +1,103 @@
 #include <stdio.h>
-#include <stdlib.h>
 
-typedef struct 
+struct
 {
-    int code;
-    char name[50];
-    float price;
-} Product;
+    char nome[50];
+    int codigo;
+    float preco;
 
-Product productArray[9];
+}Produtos[100];
 
 int code = 0;
 
-int searchFunction(Product productArray[])
+void funcaoBusca()
 {
-    int searchCode;
+    int codigoBusca;
 
-    printf("\nDigite o codigo do produto que deseja buscar: ");
-    scanf("%d", &searchCode);
+    printf("\nInforme o codigo do produto que voce deseja encontrar: ");
+    scanf("%d", &codigoBusca);
 
-    int i;
-    for (i = 0; i < code; i++) 
+    for (int i = 0; i < code; i++)
     {
-        if (productArray[i].code == searchCode) 
+        if (Produtos[i].codigo == codigoBusca)
         {
-            printf("\nProduto encontrado:\n\n");
-            printf("Codigo: %d\n", productArray[i].code);
-            printf("Nome: %s\n", productArray[i].name);
-            printf("Preco: %.2f\n", productArray[i].price);
-
-            return 0;
+            printf("\n >>>>> Produto encontrado <<<<< \n\n");
+            printf("Nome: %s\n", Produtos[i].nome);
+            printf("Codigo: %d\n", Produtos[i].codigo);
+            printf("Preco: %.2f\n", Produtos[i].preco);
+            printf("\n__________________________________________________\n\n");
+        }
+        else
+        {
+            printf("\n\n !!!!! Codigo nao encontrado no sistema !!!!!.\n\n");
         }
     }
-
-    printf("\nProduto nao encontrado.\n");
-
-    return 0;
 }
 
-int registrationFunction(Product productArray[])
+void funcaoCadastro()
 {
-    if (code >= 10) 
+    if (code == 100)
     {
-        printf("\n>>> Limite de produtos atingido <<<\n");
-        
-        return 0;
+        printf("\n\n Estoque completo. Nao e possivel cadastrar esse produto.\n\n");
     }
-
-    Product newProduct;
-
-    printf("\nDigite o codigo do produto: ");
-    scanf("%d", &newProduct.code);
-
-    for (int i = 0; i < code; i++) 
+    else
     {
-        if (productArray[i].code == newProduct.code) 
-        {
-            printf("\n\n >>>>> Esse codigo ja foi cadastrado no sistema. Tente outro <<<<< \n\n");
+        printf("\n >>>>> Ambiente de Cadastramento <<<<< \n");
+        printf("\nInforme o nome do produto: ");
+        scanf(" %49[^\n]", Produtos[code].nome);
+        printf("\n");
+        printf("Informe o codigo a ser cadastrado: ");
+        scanf("%d", &Produtos[code].codigo);
+        printf("\n");
+        printf("Informe o preco a ser cadastrado: ");
+        scanf("%f", &Produtos[code].preco);
+        code++;
 
-            return 0;
-        }
+        printf("\n____________________________________________________\n\n");
     }
-
-    printf("\nDigite o nome do produto: ");
-    scanf(" %49[^\n]", newProduct.name);
-
-    printf("\nDigite o preco do produto: ");
-    scanf("%f", &newProduct.price);
-
-    productArray[code] = newProduct;
-    code++;
-
-    printf("\n>>> Produto cadastrado com sucesso! <<<\n");
-
-    return 0;
-}
-
-int intermediateFunction(int option, Product productArray[])
-{
-    switch (option) 
-    {
-        case 1:
-            printf("\n>>> Bem-vindo ao ambiente de cadastro de produtos <<<\n");
-            registrationFunction(productArray);
-            break;
-        case 2:
-            printf("\n>>> Bem-vindo ao ambiente de busca de produtos <<<\n");
-            searchFunction(productArray);
-            break;
-        default:
-            printf("\n>>> Opcao invalida. Por favor, escolha novamente <<<\n");
-    }
-
-    return 0;
-}
-
-int main() 
-{
-    int option;
     
-    while (1) 
-    {
-        printf("\n      >>>>> Menu <<<<<\n\n");
-        printf("1. Cadastrar novo produto.\n");
-        printf("2. Buscar produtos.\n");
-        printf("0. Sair.\n");
-        printf("\nEscolha uma opcao: ");
-        scanf("%d", &option);
+}
 
-        if (option == 0)
+void funcaoIntermediaria(int opcao)
+{
+    switch (opcao)
+    {
+    case 1:
+        funcaoCadastro();
+        break;
+
+    case 2:
+        funcaoBusca();
+        break;    
+    
+    default:
+        printf("\n\nOpcao invalida. Escolha entre 1 e 3, por favor.\n\n");
+        break;
+    }
+}
+
+int main()
+{
+    int opcao;
+
+    while (1)
+    {
+        printf("         | >>>>> MENU <<<<< | \n\n");
+        printf("Digite 1 para cadastrar um produto.\n");
+        printf("Digite 2 para buscar um produto cadastrado.\n");
+        printf("Digite 3 para sair do programa.\n\n");
+        printf(" >>>>> Informe a opcao desejada: ");
+        scanf("%d", &opcao);
+        printf("\n");
+
+        if (opcao == 3)
         {
-            printf("\nSaindo...\n");
+            printf("Saindo do sistema...\n");
             break;
         }
 
-        intermediateFunction(option, productArray);
-    }
+        funcaoIntermediaria(opcao);
 
+    } 
     return 0;
 }
